@@ -57,8 +57,14 @@ export function mount(root, ctx) {
           <p class="hint">Nicknames are optional. You can change them later from the match screen.</p>
         </div>`;
     } else {
+      const onPages = /\.github\.io$/.test(location.hostname);
+      const hasServer = new URLSearchParams(location.search).get('ws')
+        || (() => { try { return localStorage.getItem('duo-arcade-ws'); } catch { return null; } })();
+      const staticWarning = onPages && !hasServer
+        ? `<p class="form-warning">Online rooms need a game server. Add <code>?ws=wss://your-server/ws</code> to the address, or run <code>node server.js</code> on your machine.</p>` : '';
       content = `
         <div class="setup-panel">
+          ${staticWarning}
           <div class="tabs" role="tablist">
             <button type="button" class="tab ${local.tab === 'create' ? 'active' : ''}" data-tab="create">Create Room</button>
             <button type="button" class="tab ${local.tab === 'join' ? 'active' : ''}" data-tab="join">Join Room</button>

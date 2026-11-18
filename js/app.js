@@ -17,6 +17,7 @@ const net = new Net();
 const params = new URLSearchParams(location.search);
 const inviteCode = (params.get('room') || '').toUpperCase().slice(0, 6);
 let lastResultKey = '';
+let lastOnlineGameId = null;
 
 function currentGameId() {
   const s = store.get();
@@ -57,6 +58,7 @@ const actions = {
 
   goHub() {
     net.close();
+    lastOnlineGameId = null;
     if (location.search) history.replaceState({}, '', location.pathname);
     store.set({
       screen: 'hub', selectedGameId: null, mode: null, offline: null, online: null,
@@ -147,6 +149,8 @@ const actions = {
     playSound('connect');
     store.set({ offline: freshOffline(gameId, offline.nicks) });
   },
+
+  openSwitch,
 
   voteRematch() { net.send({ type: 'rematch' }); playSound('vote'); },
   cancelRematch() { net.send({ type: 'cancel-rematch' }); playSound('click'); },
@@ -279,6 +283,11 @@ net.on('status', (status) => store.set({ connection: status }));
 net.on('room', (msg) => {
   const snap = msg.room;
   if (!net.roomCode) net.roomCode = snap.code;
+  const previousGameId = lastOnlineGameId;
+  lastOnlineGameId = snap.gameId;
+  if (previousGameId && previousGameId !== snap.gameId) {
+    toast(`Switched to ${getGame(snap.gameId)?.meta.name || 'a new game'}`);
+  }
   store.set({ error: null, online: snap, screen: snap.status === 'waiting' ? 'lobby' : 'game' });
 
   const key = `${snap.code}:${snap.round}:${snap.scores.join('-')}:${snap.status}`;
