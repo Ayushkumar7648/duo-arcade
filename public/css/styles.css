@@ -141,6 +141,12 @@ button:focus-visible, input:focus-visible, [role="button"]:focus-visible {
 .field .code-input { letter-spacing: .3em; font-size: 20px; font-weight: 800; text-transform: uppercase; }
 .hint { color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; margin: 14px 0 0; }
 .form-error { color: #ffb3b3; font-size: 13px; margin: 0 0 12px; text-align: center; }
+.form-warning {
+  margin: 0 0 16px; padding: 11px 13px; border-radius: 12px;
+  border: 1px solid rgba(255, 209, 102, .3); background: rgba(255, 209, 102, .08);
+  color: #ffe3a3; font-size: 12px; line-height: 1.55; text-align: center;
+}
+.form-warning code { font-family: ui-monospace, Menlo, monospace; font-size: 11px; }
 .back-link {
   background: none; border: 0; color: var(--muted); font-size: 13px; font-weight: 650;
   padding: 6px 0; margin-bottom: 18px;
