@@ -14,6 +14,8 @@ Open <http://localhost:3000>. Set `PORT=4000` to use a different port.
 
 To play online, open the app in two browsers (or two devices on the same network, using your machine's LAN IP), create a room in one, and share the code or invite link with the other.
 
+The static build is also published on GitHub Pages. Pages cannot run the Node WebSocket server, so offline mode works there out of the box; for online mode, host `server.js` on a WebSocket-capable service and open the site with `?ws=wss://your-host/ws`. The setting is remembered locally and copied into invite links.
+
 ## Project structure
 
 ```

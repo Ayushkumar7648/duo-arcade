@@ -32,12 +32,25 @@ export class Net {
     this.emit('status', status);
   }
 
+  // Same-origin by default (node server). Static hosts such as GitHub Pages
+  // can point at a separately hosted server with ?ws=wss://host/ws.
+  endpoint() {
+    const params = new URLSearchParams(location.search);
+    let configured = window.DUO_WS_URL || params.get('ws');
+    try {
+      if (!configured) configured = localStorage.getItem('duo-arcade-ws');
+      else localStorage.setItem('duo-arcade-ws', configured);
+    } catch { /* storage disabled */ }
+    if (configured) return configured;
+    const scheme = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    return `${scheme}//${location.host}/ws`;
+  }
+
   connect() {
     if (this.ws && (this.ws.readyState === 0 || this.ws.readyState === 1)) return;
     this.closedByUser = false;
     this.setStatus(this.attempts ? 'reconnecting' : 'connecting');
-    const scheme = location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const ws = new WebSocket(`${scheme}//${location.host}/ws`);
+    const ws = new WebSocket(this.endpoint());
     this.ws = ws;
 
     ws.onopen = () => {

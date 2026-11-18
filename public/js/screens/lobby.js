@@ -9,7 +9,10 @@ export function mount(root, ctx) {
     if (!online) return;
     const game = getGame(online.gameId);
     const code = online.code;
-    const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(code)}`;
+    let wsUrl = '';
+    try { wsUrl = localStorage.getItem('duo-arcade-ws') || ''; } catch { /* storage disabled */ }
+    const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(code)}`
+      + (wsUrl ? `&ws=${encodeURIComponent(wsUrl)}` : '');
     const seats = [0, 1].map((i) => {
       const seat = online.seats[i];
       if (!seat) return `<div class="lobby-seat empty"><span class="seat-avatar">?</span><span class="seat-name">Waiting for player…</span><span class="seat-tag">Open slot</span></div>`;
