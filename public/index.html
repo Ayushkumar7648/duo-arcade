@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f1d">
+  <meta name="description" content="Four classic two-player mini-games. Play on one device or in real time across devices.">
+  <title>Duo Arcade — Two players, four classics</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">DA</span><span class="brand-name">Duo Arcade</span></div>
+      <button type="button" id="mute-btn" class="mute-btn" aria-label="Mute sound effects">
+        <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </header>
+    <main id="screen" class="screen-root"></main>
+    <footer class="site-footer">Built for two · Play nearby or far away</footer>
+  </div>
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
