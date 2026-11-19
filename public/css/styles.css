@@ -446,6 +446,107 @@ button:focus-visible, input:focus-visible, [role="button"]:focus-visible {
 .db-edge.recent { filter: drop-shadow(0 0 6px rgba(255, 255, 255, .35)); }
 .db-board.is-locked .db-edge { pointer-events: none; }
 
+/* ---------- Memory Match ---------- */
+.mem-board { display: grid; gap: 9px; width: 100%; aspect-ratio: 1; }
+.mem-card {
+  position: relative; display: grid; place-items: center; min-width: 0;
+  border: 1px solid var(--border); border-radius: 16px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+  transition: transform .16s, background .16s, border-color .16s;
+}
+.mem-card:not(:disabled):hover { transform: translateY(-3px); border-color: var(--accent); background: var(--accent-soft); }
+.mem-back {
+  width: 46%; height: 46%; border-radius: 8px; opacity: .55;
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, .18) 0 4px, transparent 4px 8px);
+}
+.mem-face {
+  font-size: clamp(20px, 6.5vw, 40px); line-height: 1; color: var(--face);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--face) 55%, transparent);
+  animation: cellPop .3s cubic-bezier(.2, .9, .2, 1);
+}
+.mem-card.is-open { background: rgba(255, 255, 255, .1); }
+.mem-card.is-matched.p1 { border-color: rgba(255, 107, 107, .5); background: rgba(255, 107, 107, .12); }
+.mem-card.is-matched.p2 { border-color: rgba(91, 157, 255, .5); background: rgba(91, 157, 255, .12); }
+.mem-card.is-miss { border-color: rgba(255, 209, 102, .5); animation: shake .32s ease-out; }
+.mem-card.is-pop { animation: cellPop .34s ease-out; }
+@keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+/* ---------- Ultimate Tic-Tac-Toe ---------- */
+.utt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+.utt-board {
+  position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+  padding: 5px; border: 1px solid var(--border); border-radius: 14px;
+  background: rgba(255, 255, 255, .03);
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.utt-board.is-forced { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent-soft); }
+.utt-board.is-decided { opacity: .88; }
+.utt-board.is-win { border-color: var(--draw); box-shadow: 0 0 24px rgba(255, 209, 102, .22); }
+.utt-cell {
+  position: relative; display: grid; place-items: center; aspect-ratio: 1; min-width: 0; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .06); border-radius: 7px; background: rgba(255, 255, 255, .03);
+  transition: background .15s, border-color .15s;
+}
+.utt-cell:not(:disabled):hover { background: var(--accent-soft); border-color: var(--accent); }
+.utt-cell .mark { width: 62%; height: 62%; }
+.utt-cell .mark-o { border-width: 3px; }
+.utt-cell.last { animation: cellPop .26s ease-out; }
+.utt-subwin {
+  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+  border-radius: 14px; background: rgba(8, 11, 22, .6);
+  font-size: clamp(30px, 12vw, 60px); font-weight: 900; line-height: 1;
+}
+.utt-subwin.p1 { color: var(--p1); }
+.utt-subwin.p2 { color: var(--p2); }
+.utt-subwin.draw { color: var(--muted); }
+
+/* ---------- Battleship ---------- */
+.bs-stage { display: grid; gap: 14px; }
+.bs-panel { padding: 12px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); }
+.bs-panel.enemy { border-color: rgba(34, 211, 238, .3); }
+.bs-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
+.bs-panel-title { font-size: 13px; font-weight: 750; }
+.bs-panel-title.p1 { color: var(--p1); }
+.bs-panel-title.p2 { color: var(--p2); }
+.bs-panel-head small { color: var(--muted); font-size: 11px; text-align: right; line-height: 1.4; }
+.bs-grid { display: grid; gap: 3px; }
+.bs-cell {
+  position: relative; aspect-ratio: 1; min-width: 0; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .07); border-radius: 6px;
+  background: rgba(5, 9, 20, .5); transition: background .14s, border-color .14s;
+}
+.bs-cell:not(:disabled):hover { background: var(--accent-soft); border-color: var(--accent); }
+.bs-cell.ship { background: rgba(91, 157, 255, .3); border-color: rgba(91, 157, 255, .5); }
+.bs-cell.ship::after { content: ""; position: absolute; inset: 26%; border-radius: 50%; background: rgba(220, 235, 255, .85); }
+.bs-cell.hit { background: rgba(255, 107, 107, .34); border-color: rgba(255, 107, 107, .6); }
+.bs-cell.hit::after {
+  content: ""; position: absolute; inset: 20%; border-radius: 50%;
+  background: radial-gradient(circle, #ffd3d3 0 30%, var(--p1) 60%, #b83030 100%);
+  box-shadow: 0 0 12px rgba(255, 107, 107, .6);
+}
+.bs-cell.miss { background: rgba(255, 255, 255, .06); }
+.bs-cell.miss::after { content: ""; position: absolute; inset: 38%; border-radius: 50%; background: var(--muted); }
+.bs-cell.last { animation: cellPop .26s ease-out; }
+.bs-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.bs-orient {
+  display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 16px;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  font-size: 13px; font-weight: 700;
+}
+.bs-orient:not(:disabled):hover { background: var(--surface-hover); }
+.bs-orient-icon { width: 20px; height: 20px; border-radius: 4px; background: var(--accent); }
+.bs-orient.v .bs-orient-icon { width: 9px; height: 20px; }
+.bs-legend { display: flex; gap: 7px; }
+.bs-ship {
+  display: inline-flex; gap: 2px; padding: 5px 6px; border-radius: 8px;
+  background: rgba(255, 255, 255, .05); border: 1px solid var(--border);
+}
+.bs-ship i { width: 8px; height: 8px; border-radius: 2px; background: rgba(91, 157, 255, .6); }
+.bs-ship.next { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.bs-ship.done i { background: var(--good); }
+.bs-ship.sunk { opacity: .5; }
+.bs-ship.sunk i { background: var(--p1); }
+
 /* ---------- Result overlay ---------- */
 .result-overlay {
   position: absolute; inset: 0; display: grid; place-items: center; padding: 14px;

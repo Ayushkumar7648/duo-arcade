@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Four classic 2-player mini-games with offline pass-and-play and real-time online rooms. Zero runtime dependencies.",
+  "description": "Seven 2-player mini-games with offline pass-and-play and real-time online rooms. Zero runtime dependencies.",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"

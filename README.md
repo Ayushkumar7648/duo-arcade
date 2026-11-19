@@ -1,6 +1,6 @@
 # Duo Arcade
 
-Four classic two-player mini-games — Tic-Tac-Toe, Connect Four, Rock-Paper-Scissors and Dots & Boxes — with **offline pass-and-play** and **real-time online rooms**.
+Seven two-player mini-games — Tic-Tac-Toe, Connect Four, Rock-Paper-Scissors, Dots & Boxes, Memory Match, Ultimate Tic-Tac-Toe and Battleship — with **offline pass-and-play** and **real-time online rooms**.
 
 ## Run
 
@@ -31,7 +31,10 @@ duo-arcade/
     │   ├── tictactoe.js
     │   ├── connectfour.js
     │   ├── rps.js                  # Includes sanitize() for hidden simultaneous throws
-    │   └── dotsboxes.js
+    │   ├── dotsboxes.js
+    │   ├── memory.js               # sanitize() hides face-down card symbols
+    │   ├── ultimatettt.js
+    │   └── battleship.js           # sanitize() hides the opponent's fleet
     └── js/
         ├── app.js                  # Composition root: actions, network events, global overlays
         ├── store.js                # Tiny observable app state (screens/UI only)
@@ -48,7 +51,10 @@ duo-arcade/
             ├── tictactoe.js        # Board HTML only; no listeners
             ├── connectfour.js
             ├── rps.js
-            └── dotsboxes.js
+            ├── dotsboxes.js
+            ├── memory.js
+            ├── ultimatettt.js
+            └── battleship.js
 ```
 
 ## State architecture
@@ -72,5 +78,8 @@ The server reconnects players by room code + nickname, rejects moves from the wr
 - Nicknames are optional and can be set before starting an offline match.
 - Capturing a box in Dots & Boxes grants another turn; the game ends when all boxes are claimed (ties count as draws).
 - RPS is simultaneous: on one device, pass the phone after locking in your throw; online, throws stay secret until both are submitted. Each throw is its own scored round.
+- Memory Match hides every face-down card in the online snapshot, so the deal cannot be read from the wire.
+- Ultimate Tic-Tac-Toe plays inside nine nested boards: your move dictates which board your opponent must play next, and winning three boards in a line takes the game.
+- Battleship has a placement phase (each player anchors their fleet, with an orientation toggle) followed by alternating shots. The opponent's fleet is stripped from each online snapshot until the game ends.
 - "Switch Game" resets scores for the new game but keeps online players in the same room.
 - Sound effects are generated with the Web Audio API; the toggle in the header persists in `localStorage`.

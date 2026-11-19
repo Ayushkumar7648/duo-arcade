@@ -3,9 +3,14 @@ import * as tictactoe from './tictactoe.js';
 import * as connectfour from './connectfour.js';
 import * as rps from './rps.js';
 import * as dotsboxes from './dotsboxes.js';
+import * as memory from './memory.js';
+import * as ultimatettt from './ultimatettt.js';
+import * as battleship from './battleship.js';
 
-export const games = { tictactoe, connectfour, rps, dotsboxes };
-export const gameList = [tictactoe, connectfour, rps, dotsboxes].map((g) => g.meta);
+const modules = [tictactoe, connectfour, rps, dotsboxes, memory, ultimatettt, battleship];
+
+export const games = Object.fromEntries(modules.map((g) => [g.meta.id, g]));
+export const gameList = modules.map((g) => g.meta);
 
 export function getGame(id) {
   return games[id] || null;

@@ -50,6 +50,14 @@ function boxCount(state) {
   return state.boxes?.filter((owner) => owner !== null).length || 0;
 }
 
+function matchedCount(state) {
+  return state.matched?.filter(Boolean).length || 0;
+}
+
+function sunkCount(state) {
+  return (state.sunk?.[0] || 0) + (state.sunk?.[1] || 0);
+}
+
 const actions = {
   pickGame(gameId) {
     playSound('click');
@@ -116,6 +124,8 @@ const actions = {
       playSound(result.draw ? 'draw' : 'win');
     } else if (!result.over) {
       if (offline.gameId === 'dotsboxes' && boxCount(next) > boxCount(offline.state)) playSound('capture');
+      else if (offline.gameId === 'memory' && matchedCount(next) > matchedCount(offline.state)) playSound('capture');
+      else if (offline.gameId === 'battleship' && sunkCount(next) > sunkCount(offline.state)) playSound('capture');
       else playSound('move');
     }
     store.set({ offline: patch });
