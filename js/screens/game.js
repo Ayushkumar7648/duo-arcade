@@ -1,5 +1,8 @@
 import { getGame } from '../../shared/games/index.js';
-import { renderTicTacToe, renderConnectFour, renderRps, renderDotsBoxes } from '../renderers/index.js';
+import {
+  renderTicTacToe, renderConnectFour, renderRps, renderDotsBoxes,
+  renderMemory, renderUltimateTtt, renderBattleship,
+} from '../renderers/index.js';
 import { escapeHtml } from '../ui.js';
 
 const RENDERERS = {
@@ -7,6 +10,9 @@ const RENDERERS = {
   connectfour: renderConnectFour,
   rps: renderRps,
   dotsboxes: renderDotsBoxes,
+  memory: renderMemory,
+  ultimatettt: renderUltimateTtt,
+  battleship: renderBattleship,
 };
 
 /** Normalize offline state and online snapshots into one view model. */
@@ -37,6 +43,7 @@ function derive(state) {
     connection: offlineMode ? 'offline' : state.connection,
     picker: null,
     visibleChoices: [false, false],
+    viewer: offlineMode ? (gs.turn ?? 0) : source.you,
     canMove: false,
   };
 
@@ -58,6 +65,14 @@ function turnText(m) {
   if (m.gameId === 'rps') {
     if (m.mode === 'offline') return `${m.labels[m.picker]}, pick your throw`;
     return m.gs.choices?.[m.you] ? 'Throw locked in · waiting' : 'Pick your throw';
+  }
+  if (m.gameId === 'battleship') {
+    const placing = m.gs.phase === 'placing';
+    if (m.mode === 'offline') {
+      return placing ? `${m.labels[m.gs.turn]} · place your fleet` : `${m.labels[m.gs.turn]} · take a shot`;
+    }
+    if (placing) return m.gs.turn === m.you ? 'Place your fleet' : 'Opponent is placing…';
+    return m.gs.turn === m.you ? 'Your turn to fire' : 'Waiting for opponent…';
   }
   if (m.mode === 'offline') return `${m.labels[m.gs.turn]}'s Turn`;
   if (m.gs.turn === m.you) return "Your Turn";
@@ -182,6 +197,7 @@ export function mount(root, ctx) {
         labels: m.labels,
         picker: m.picker,
         visibleChoices: m.visibleChoices,
+        viewer: m.viewer,
       });
       root.querySelector('.result-host').innerHTML = resultPanel(m);
 
