@@ -1,6 +1,6 @@
 # Duo Arcade
 
-Seven two-player mini-games — Tic-Tac-Toe, Connect Four, Rock-Paper-Scissors, Dots & Boxes, Memory Match, Ultimate Tic-Tac-Toe and Battleship — with **offline pass-and-play** and **real-time online rooms**.
+Eight two-player mini-games — Tic-Tac-Toe, Connect Four, Rock-Paper-Scissors, Dots & Boxes, Memory Match, Ultimate Tic-Tac-Toe, Battleship and Reversi — with **offline pass-and-play** and **real-time online rooms**.
 
 ## Run
 
@@ -34,7 +34,8 @@ duo-arcade/
     │   ├── dotsboxes.js
     │   ├── memory.js               # sanitize() hides face-down card symbols
     │   ├── ultimatettt.js
-    │   └── battleship.js           # sanitize() hides the opponent's fleet
+    │   ├── battleship.js           # sanitize() hides the opponent's fleet
+    │   └── reversi.js              # Legal-move hints + automatic passes
     └── js/
         ├── app.js                  # Composition root: actions, network events, global overlays
         ├── store.js                # Tiny observable app state (screens/UI only)
@@ -54,7 +55,8 @@ duo-arcade/
             ├── dotsboxes.js
             ├── memory.js
             ├── ultimatettt.js
-            └── battleship.js
+            ├── battleship.js
+            └── reversi.js
 ```
 
 ## State architecture
@@ -81,5 +83,6 @@ The server reconnects players by room code + nickname, rejects moves from the wr
 - Memory Match hides every face-down card in the online snapshot, so the deal cannot be read from the wire.
 - Ultimate Tic-Tac-Toe plays inside nine nested boards: your move dictates which board your opponent must play next, and winning three boards in a line takes the game.
 - Battleship has a placement phase (each player anchors their fleet, with an orientation toggle) followed by alternating shots. The opponent's fleet is stripped from each online snapshot until the game ends.
+- Reversi discs must bracket opponent discs to flip them. Legal squares are hinted, and a player with no legal move passes automatically; the game ends when neither player can move.
 - "Switch Game" resets scores for the new game but keeps online players in the same room.
 - Sound effects are generated with the Web Audio API; the toggle in the header persists in `localStorage`.
