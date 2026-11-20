@@ -1,7 +1,7 @@
 import { getGame } from '../../shared/games/index.js';
 import {
   renderTicTacToe, renderConnectFour, renderRps, renderDotsBoxes,
-  renderMemory, renderUltimateTtt, renderBattleship,
+  renderMemory, renderUltimateTtt, renderBattleship, renderReversi,
 } from '../renderers/index.js';
 import { escapeHtml } from '../ui.js';
 
@@ -13,6 +13,7 @@ const RENDERERS = {
   memory: renderMemory,
   ultimatettt: renderUltimateTtt,
   battleship: renderBattleship,
+  reversi: renderReversi,
 };
 
 /** Normalize offline state and online snapshots into one view model. */

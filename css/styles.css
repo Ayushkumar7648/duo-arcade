@@ -547,6 +547,45 @@ button:focus-visible, input:focus-visible, [role="button"]:focus-visible {
 .bs-ship.sunk { opacity: .5; }
 .bs-ship.sunk i { background: var(--p1); }
 
+/* ---------- Reversi ---------- */
+.rev-stage { display: grid; gap: 10px; }
+.rev-note {
+  margin: 0; padding: 9px 12px; border-radius: 11px; font-size: 12px; text-align: center;
+  border: 1px solid rgba(255, 209, 102, .3); background: rgba(255, 209, 102, .09); color: #ffe3a3;
+}
+.rev-board {
+  display: grid; gap: 3px; width: 100%; aspect-ratio: 1; padding: 8px;
+  border: 1px solid rgba(251, 146, 60, .28); border-radius: 18px;
+  background: linear-gradient(160deg, rgba(251, 146, 60, .14), rgba(255, 255, 255, .03));
+  box-shadow: inset 0 0 0 4px rgba(8, 12, 24, .4);
+}
+.rev-cell {
+  position: relative; display: grid; place-items: center; aspect-ratio: 1; min-width: 0; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .07); border-radius: 6px;
+  background: rgba(5, 9, 20, .42); transition: background .14s, border-color .14s;
+}
+.rev-cell:not(:disabled):hover { background: var(--accent-soft); border-color: var(--accent); }
+.rev-cell.last { border-color: var(--draw); }
+.rev-hint {
+  width: 22%; height: 22%; border-radius: 50%; background: rgba(255, 255, 255, .22);
+  animation: pulseHint 1.6s ease-in-out infinite;
+}
+@keyframes pulseHint { 50% { background: rgba(255, 255, 255, .5); transform: scale(1.18); } }
+.rev-disc {
+  display: block; width: 84%; height: 84%; border-radius: 50%;
+  animation: flipDisc .32s cubic-bezier(.2, .9, .2, 1);
+}
+.rev-disc.p1 {
+  background: radial-gradient(circle at 32% 28%, #4b5568, #11151f 68%);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .5), inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.rev-disc.p2 {
+  background: radial-gradient(circle at 32% 28%, #fff, #c7d0e6 72%);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .4);
+}
+.rev-cell.flipped .rev-disc { animation: flipDisc .42s cubic-bezier(.2, .9, .2, 1); }
+@keyframes flipDisc { from { transform: rotateY(90deg) scale(.7); } to { transform: none; } }
+
 /* ---------- Result overlay ---------- */
 .result-overlay {
   position: absolute; inset: 0; display: grid; place-items: center; padding: 14px;

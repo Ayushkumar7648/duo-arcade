@@ -56,6 +56,7 @@ export function gameIcon(id) {
     memory: `<svg ${common}><rect x="7" y="16" width="22" height="27" rx="4"/><rect x="19" y="5" width="22" height="27" rx="4"/><path d="M30 12l5 6-5 6-5-6z"/></svg>`,
     ultimatettt: `<svg ${common}><rect x="5" y="5" width="38" height="38" rx="4"/><path d="M17.7 5v38M30.3 5v38M5 17.7h38M5 30.3h38"/><path d="M9 9l4 4m0-4l-4 4" stroke-width="3"/><circle cx="36" cy="36" r="3" stroke-width="3"/></svg>`,
     battleship: `<svg ${common}><path d="M9 29h30l-5 9H14z"/><path d="M17 29V18h10l5 11"/><path d="M21 22h5"/><path d="M6 43c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg>`,
+    reversi: `<svg ${common}><rect x="6" y="6" width="36" height="36" rx="5"/><path d="M15 6v36M24 6v36M33 6v36M6 15h36M6 24h36M6 33h36"/><circle cx="19.5" cy="19.5" r="3.6" fill="currentColor" stroke="none"/><circle cx="28.5" cy="28.5" r="3.6" stroke-width="3"/></svg>`,
   };
   return icons[id] || '';
 }

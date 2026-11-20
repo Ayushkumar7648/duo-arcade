@@ -17,7 +17,7 @@ export function mount(root, ctx) {
       <div class="hub-hero">
         <span class="eyebrow">Local &amp; real-time multiplayer</span>
         <h1>Duo <span>Arcade</span></h1>
-        <p>Seven games built for two. Share a device, or share a link and play across the room, across town, anywhere.</p>
+        <p>Eight games built for two. Share a device, or share a link and play across the room, across town, anywhere.</p>
       </div>
       <div class="hub-grid">${cards}</div>
       <div class="hub-note">

@@ -126,6 +126,7 @@ const actions = {
       if (offline.gameId === 'dotsboxes' && boxCount(next) > boxCount(offline.state)) playSound('capture');
       else if (offline.gameId === 'memory' && matchedCount(next) > matchedCount(offline.state)) playSound('capture');
       else if (offline.gameId === 'battleship' && sunkCount(next) > sunkCount(offline.state)) playSound('capture');
+      else if (offline.gameId === 'reversi') playSound('capture');
       else playSound('move');
     }
     store.set({ offline: patch });
